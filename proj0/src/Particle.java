@@ -24,26 +24,34 @@ public class    Particle {
         if (flavor == ParticleFlavor.EMPTY) {
             return Color.BLACK;
         }
-        else if (flavor == ParticleFlavor.SAND) {
+         if (flavor == ParticleFlavor.SAND) {
             return Color.YELLOW;
         }
-        else if (flavor == ParticleFlavor.BARRIER) {
+         if (flavor == ParticleFlavor.BARRIER) {
             return Color.GRAY;
         }
-        else if (flavor == ParticleFlavor.  WATER) {
+         if (flavor == ParticleFlavor.  WATER) {
             return Color.BLUE;
         }
-        else if (flavor == ParticleFlavor.FOUNTAIN) {
+         if (flavor == ParticleFlavor.FOUNTAIN) {
             return Color.CYAN;
         }
-        else if (flavor == ParticleFlavor.PLANT) {
-            return new Color(0,255,0) ;
+        if (flavor == ParticleFlavor.PLANT) {
+            double ratio = (double) Math.max(0, Math.min(lifespan, PLANT_LIFESPAN)) / PLANT_LIFESPAN;
+            int g = 120 + (int) Math.round((255 - 120) * ratio);
+            return new Color(0, g, 0);
         }
-        else if (flavor == ParticleFlavor.FIRE) {
-            return new Color(255,0,0);
+        if (flavor == ParticleFlavor.FIRE) {
+            double ratio = (double) Math.max(0, Math.min(lifespan, FIRE_LIFESPAN)) / FIRE_LIFESPAN;
+            int r = (int) Math.round(255 * ratio);
+            return new Color(r, 0, 0);
         }
-        else if (flavor == ParticleFlavor.FLOWER) {
-            return new Color(255,141,161);
+        if (flavor == ParticleFlavor.FLOWER) {
+            double ratio = (double) Math.max(0, Math.min(lifespan, FLOWER_LIFESPAN)) / FLOWER_LIFESPAN;
+            int r = 120 + (int) Math.round((255 - 120) * ratio);
+            int g = 70 + (int) Math.round((141 - 70) * ratio);
+            int b = 80 + (int) Math.round((161 - 80) * ratio);
+            return new Color(r, g, b);
         }
         return Color.GRAY;
     }
@@ -56,17 +64,105 @@ public class    Particle {
     }
 
     public void fall(Map<Direction, Particle> neighbors) {
+        Particle p = neighbors.get(Direction.DOWN);
+        if (p.flavor == ParticleFlavor.EMPTY){
+            this.moveInto(p);
+        }
+
+
     }
 
     public void flow(Map<Direction, Particle> neighbors) {
+        int randoms= StdRandom.uniformInt(3);
+        Particle p = neighbors.get(Direction.LEFT);
+        Particle q = neighbors.get(Direction.RIGHT);
+
+        switch (randoms){
+            case 0 :
+                break;
+            case 1:
+                if (p.flavor==ParticleFlavor.EMPTY){
+                    this.moveInto(p);
+                }
+                break;
+            case 2:
+                if (q.flavor==ParticleFlavor.EMPTY){
+                    this.moveInto(q);}
+                    break;
+
+        }
+
     }
 
+
     public void grow(Map<Direction, Particle> neighbors) {
+
+        int randoms= StdRandom.uniformInt(10);
+        Particle u = neighbors.get(Direction.UP);
+        Particle p = neighbors.get(Direction.LEFT);
+        Particle q = neighbors.get(Direction.RIGHT);
+
+        if(randoms>=3){
+            return;
+        }
+        else {
+
+            switch (randoms) {
+                case 0:
+                    if (u.flavor == ParticleFlavor.EMPTY) {
+                        u.flavor=flavor;
+                        u.lifespan=LIFESPANS.get(this.flavor);
+                    }
+                    break;
+                case 1:
+                    if (p.flavor == ParticleFlavor.EMPTY) {
+                        p.flavor=flavor;
+                        p.lifespan=LIFESPANS.get(this.flavor);
+                    }
+                    break;
+                case 2:
+                    if (q.flavor == ParticleFlavor.EMPTY) {
+                        q.flavor=flavor;
+                        q.lifespan=LIFESPANS.get(this.flavor);
+                    }
+                    break;
+
+            }
+        }
+
+
+
+
     }
+
+
 
     public void burn(Map<Direction, Particle> neighbors) {
     }
 
     public void action(Map<Direction, Particle> neighbors) {
+
+        if (this.flavor == ParticleFlavor.EMPTY){
+            return;
+        }
+        if (this.flavor != ParticleFlavor.BARRIER) {
+            fall(neighbors);    
+
+        }
+        if (this.flavor == ParticleFlavor.WATER) {
+            flow(neighbors);
+
+        }
+        if (this.flavor == ParticleFlavor.PLANT || this.flavor == ParticleFlavor.FLOWER ) {
+
+            grow(neighbors);
+
+
+        }
+
+
+
     }
+
+
 }
