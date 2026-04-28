@@ -40,16 +40,11 @@ public class IntList {
      * You are not allowed to use "new" in this method.
      */
     public static IntList incrRecursiveDestructive(IntList L, int x) {
-        // TODO: Fill in this code
-
-        if(L.rest==null){
-            L.first= L.first + x;
-            return L;
+        L.first = L.first + x;
+        if (L.rest != null) {
+            incrRecursiveDestructive(L.rest, x);
         }
-        L.first= L.first + x;
-        incrRecursiveDestructive(L.rest,x);
         return L;
-
     }
 
 
@@ -75,6 +70,11 @@ public class IntList {
      */
     public void addLast(int x) {
         // Optional: Fill in this code
+        if (rest==null){
+            rest = new IntList(x,null);
+            return;
+        }
+        rest.addLast(x);
     }
 
     /**
@@ -85,5 +85,7 @@ public class IntList {
      */
     public void addFirst(int x) {
         // Optional: Fill in this code
+        rest = new IntList(first, rest);
+        first = x;
     }
 }
