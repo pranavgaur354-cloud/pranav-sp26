@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.StdRandom;
 import java.awt.*;
 import java.util.Map;
 
-public class    Particle {
+public class Particle {
     public ParticleFlavor flavor;
     public int lifespan;
 

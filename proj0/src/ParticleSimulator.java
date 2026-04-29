@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.StdDraw;
 import java.util.HashMap;
 import java.util.Map;
 
-public class    ParticleSimulator {
+public class ParticleSimulator {
     public static final Map<Character, ParticleFlavor> LETTER_TO_PARTICLE = Map.of(
             's', ParticleFlavor.SAND,
             'b', ParticleFlavor.BARRIER,
