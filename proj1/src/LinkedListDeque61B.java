@@ -4,25 +4,26 @@ import java.util.ArrayList;
 
 
 public class LinkedListDeque61B<T> implements Deque61B<T> {
-    private Node<T> sentinel;
-    private int size;
 
 
-    public static class Node<T> {
-        public Node<T> prev;
+
+    public  class Node {
+        public Node prev;
         public T item;
-        public Node<T> next;
+        public Node next;
 
-        public Node( T i, Node<T> p, Node<T> n){
+        public Node( T i, Node p, Node n){
             prev =p;
             next = n;
             item = i;
         }
     }
 
+    private Node sentinel;
+    private int size;
 
     public LinkedListDeque61B(){
-        sentinel = new Node<> ( null,null ,null);
+        sentinel = new Node( null,null ,null);
         sentinel.next=sentinel;
         sentinel.prev=sentinel;
 
@@ -30,7 +31,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     @Override
     public void addFirst(T x) {
 
-            Node<T> a = new Node<T>(x,sentinel,sentinel.next);
+            Node a = new Node(x,sentinel,sentinel.next);
         sentinel.next.prev=a;
         sentinel.next=a;
             size = size+1 ;
@@ -39,7 +40,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public void addLast(T x) {
-        Node<T> a = new Node<>(x,sentinel.prev,sentinel);
+        Node a = new Node(x,sentinel.prev,sentinel);
         sentinel.prev.next=a;
         sentinel.prev=a;
         size++;
@@ -53,7 +54,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 //            return new ArrayList<>() ;
 //
 //        }
-        Node<T> p;
+        Node p;
         p=sentinel.next;
         List<T> a = new ArrayList<>();
         while(p!=sentinel){
@@ -65,7 +66,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public boolean isEmpty() {
-        if(sentinel.next==sentinel){
+        if(sentinel.next == sentinel){
             return true;
         }
         return false;
@@ -78,13 +79,13 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T getFirst() {
-        Node<T> p = sentinel.next;
+        Node p = sentinel.next;
         return p.item ;
     }
 
     @Override
     public T getLast() {
-        Node<T> p = sentinel.prev;
+        Node p = sentinel.prev;
         return p.item;
     }
 
@@ -93,7 +94,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         if(isEmpty()){
             return null;
         }
-        Node<T> a = sentinel.next;
+        Node a = sentinel.next;
         sentinel.next=a.next;
         a.next.prev=sentinel;
 
@@ -106,7 +107,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         if(isEmpty()){
             return null;
         }
-        Node<T> a = sentinel.prev;
+        Node a = sentinel.prev;
         sentinel.prev=a.prev;
         a.prev.next =sentinel;
 
@@ -117,7 +118,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T get(int index) {
-        Node<T> p= sentinel.next;
+        Node p= sentinel.next;
         if(size <= index || index < 0){
             return  null;
         }
@@ -136,7 +137,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         return getRecursiveHelper(sentinel.next, index);
     }
 
-    private T getRecursiveHelper(Node<T> obj , int index){
+    private T getRecursiveHelper(Node obj , int index){
 
         if(index==0){
             return obj.item;
