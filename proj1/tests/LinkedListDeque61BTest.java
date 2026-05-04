@@ -53,20 +53,107 @@ public class LinkedListDeque61BTest {
          lld1.addLast(2);   // [-1, 0, 1, 2]
          lld1.addFirst(-2); // [-2, -1, 0, 1, 2]
 
-         assertThat(lld1.toList()).containsExactly(-2, -1, 0, 1, 2).inOrder();
+     assertThat(lld1.toList()).containsExactly(-2, -1, 0, 1, 2).inOrder();
      }
 
 //     Below, you'll write your own tests for LinkedListDeque61B.
-        public void listArrayReturnTest(){
+    @Test
+    public void listArrayEmptyTest(){
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        assertThat(lld1.toList()).containsExactly().inOrder();
+        assertThat(lld1.size()).isEqualTo(0);
+
+
+        }
+        @Test
+        public void listArrayGetFirstTest(){
             Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+            assertThat(lld1.getFirst()).isEqualTo(null);
+            assertThat(lld1.size()).isEqualTo(0);
+            lld1.addLast(10);
+            assertThat(lld1.getFirst()).isEqualTo(10);
+            assertThat(lld1.size()).isEqualTo(1);
+
+        }
+
+        @Test
+        public void GetLastTest(){
+            Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+            assertThat(lld1.getLast()).isEqualTo(null);
+            assertThat(lld1.size()).isEqualTo(0);
+            lld1.addFirst(10);
+            lld1.addLast(20);
+            assertThat(lld1.getLast()).isEqualTo(20);
+            assertThat(lld1.size()).isEqualTo(2);
+        }
+        @Test
+        public void testRemoveFirst(){
+            Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+            assertThat(lld1.removeFirst()).isEqualTo(null);
+            assertThat(lld1.size()).isEqualTo(0);
+            lld1.addFirst(10);
+            lld1.addLast(20);
+
+            assertThat(lld1.getFirst()).isEqualTo(10);
+            assertThat(lld1.size()).isEqualTo(2);
+
+            assertThat(lld1.removeFirst()).isEqualTo(10);
+            assertThat(lld1.size()).isEqualTo(1);
+
+            assertThat(lld1.getFirst()).isEqualTo(20);
+            assertThat(lld1.size()).isEqualTo(1);
+        }
+
+        @Test
+        public void testRemoveLast(){
+            Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+            assertThat(lld1.removeLast()).isEqualTo(null);
+            assertThat(lld1.size()).isEqualTo(0);
+            lld1.addFirst(10);
+            lld1.addLast(20);
+
+            assertThat(lld1.getFirst()).isEqualTo(10);
+            assertThat(lld1.size()).isEqualTo(2);
+
+            assertThat(lld1.removeLast()).isEqualTo(20);
+            assertThat(lld1.size()).isEqualTo(1);
+
+            assertThat(lld1.getFirst()).isEqualTo(10);
+            assertThat(lld1.size()).isEqualTo(1);
+        }
+
+        @Test
+        public void testGet(){
+            Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+            assertThat(lld1.isEmpty()).isEqualTo(null);
+         /* I've decided to add in comments the state after each call for the convenience of the
+            person reading this test. Some programmers might consider this excessively verbose. */
             lld1.addLast(0);   // [0]
             lld1.addLast(1);   // [0, 1]
             lld1.addFirst(-1); // [-1, 0, 1]
             lld1.addLast(2);   // [-1, 0, 1, 2]
             lld1.addFirst(-2); // [-2, -1, 0, 1, 2]
 
-
-
-
+            assertThat(lld1.get(-1)).isEqualTo(null);
+            assertThat(lld1.get(3)).isEqualTo(2);
+            assertThat(lld1.get(20000)).isEqualTo(null);
         }
+
+        @Test
+        public void testGetRecursive(){
+            Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+            assertThat(lld1.isEmpty()).isEqualTo(null);
+         /* I've decided to add in comments the state after each call for the convenience of the
+            person reading this test. Some programmers might consider this excessively verbose. */
+            lld1.addLast(0);   // [0]
+            lld1.addLast(1);   // [0, 1]
+            lld1.addFirst(-1); // [-1, 0, 1]
+            lld1.addLast(2);   // [-1, 0, 1, 2]
+            lld1.addFirst(-2); // [-2, -1, 0, 1, 2]
+
+            assertThat(lld1.getRecursive(-1)).isEqualTo(null);
+            assertThat(lld1.getRecursive(3)).isEqualTo(2);
+            assertThat(lld1.getRecursive(20000)).isEqualTo(null);
+        }
+
 }

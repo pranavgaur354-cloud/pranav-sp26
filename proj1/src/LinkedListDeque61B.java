@@ -9,11 +9,11 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
 
     public static class Node<T> {
-        public Node prev;
+        public Node<T> prev;
         public T item;
-        public Node next;
+        public Node<T> next;
 
-        public Node( T i, Node p, Node n){
+        public Node( T i, Node<T> p, Node<T> n){
             prev =p;
             next = n;
             item = i;
@@ -30,12 +30,10 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     @Override
     public void addFirst(T x) {
 
-            Node a = new Node<>(x,sentinel,sentinel.next);
+            Node<T> a = new Node<T>(x,sentinel,sentinel.next);
         sentinel.next.prev=a;
         sentinel.next=a;
-            size++;
-
-
+            size = size+1 ;
 
     }
 
@@ -67,42 +65,83 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public boolean isEmpty() {
-        
+        if(sentinel.next==sentinel){
+            return true;
+        }
         return false;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public T getFirst() {
-        return null;
+        Node<T> p = sentinel.next;
+        return p.item ;
     }
 
     @Override
     public T getLast() {
-        return null;
+        Node<T> p = sentinel.prev;
+        return p.item;
     }
 
     @Override
     public T removeFirst() {
-        return null;
+        if(isEmpty()){
+            return null;
+        }
+        Node<T> a = sentinel.next;
+        sentinel.next=a.next;
+        a.next.prev=sentinel;
+
+        size--;
+        return a.item;
     }
 
     @Override
     public T removeLast() {
-        return null;
+        if(isEmpty()){
+            return null;
+        }
+        Node<T> a = sentinel.prev;
+        sentinel.prev=a.prev;
+        a.prev.next =sentinel;
+
+        size--;
+        return a.item;
+
     }
 
     @Override
     public T get(int index) {
-        return null;
+        Node<T> p= sentinel.next;
+        if(size <= index || index < 0){
+            return  null;
+        }
+        while(index >0 ){
+            p = p.next;
+            index--;
+        }
+        return p.item;
     }
 
     @Override
     public T getRecursive(int index) {
-        return null;
+        if (index >= size || index < 0) {
+            return null;
+        }
+        return getRecursiveHelper(sentinel.next, index);
+    }
+
+    private T getRecursiveHelper(Node<T> obj , int index){
+
+        if(index==0){
+            return obj.item;
+        }
+
+        return getRecursiveHelper(obj.next,index -1);
     }
 }
