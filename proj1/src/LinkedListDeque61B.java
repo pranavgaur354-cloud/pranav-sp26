@@ -6,14 +6,13 @@ import java.util.ArrayList;
 public class LinkedListDeque61B<T> implements Deque61B<T> {
 
 
-
-    public  class Node {
+    public class Node {
         public Node prev;
         public T item;
         public Node next;
 
-        public Node( T i, Node p, Node n){
-            prev =p;
+        public Node(T i, Node p, Node n) {
+            prev = p;
             next = n;
             item = i;
         }
@@ -22,27 +21,28 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     private Node sentinel;
     private int size;
 
-    public LinkedListDeque61B(){
-        sentinel = new Node( null,null ,null);
-        sentinel.next=sentinel;
-        sentinel.prev=sentinel;
+    public LinkedListDeque61B() {
+        sentinel = new Node(null, null, null);
+        sentinel.next = sentinel;
+        sentinel.prev = sentinel;
 
     }
+
     @Override
     public void addFirst(T x) {
 
-            Node a = new Node(x,sentinel,sentinel.next);
-        sentinel.next.prev=a;
-        sentinel.next=a;
-            size = size+1 ;
+        Node a = new Node(x, sentinel, sentinel.next);
+        sentinel.next.prev = a;
+        sentinel.next = a;
+        size = size + 1;
 
     }
 
     @Override
     public void addLast(T x) {
-        Node a = new Node(x,sentinel.prev,sentinel);
-        sentinel.prev.next=a;
-        sentinel.prev=a;
+        Node a = new Node(x, sentinel.prev, sentinel);
+        sentinel.prev.next = a;
+        sentinel.prev = a;
         size++;
 
 
@@ -55,9 +55,9 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 //
 //        }
         Node p;
-        p=sentinel.next;
+        p = sentinel.next;
         List<T> a = new ArrayList<>();
-        while(p!=sentinel){
+        while (p != sentinel) {
             a.add(p.item);
             p = p.next;
         }
@@ -66,7 +66,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public boolean isEmpty() {
-        if(sentinel.next == sentinel){
+        if (sentinel.next == sentinel) {
             return true;
         }
         return false;
@@ -80,7 +80,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     @Override
     public T getFirst() {
         Node p = sentinel.next;
-        return p.item ;
+        return p.item;
     }
 
     @Override
@@ -91,12 +91,12 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T removeFirst() {
-        if(isEmpty()){
+        if (isEmpty()) {
             return null;
         }
         Node a = sentinel.next;
-        sentinel.next=a.next;
-        a.next.prev=sentinel;
+        sentinel.next = a.next;
+        a.next.prev = sentinel;
 
         size--;
         return a.item;
@@ -104,12 +104,12 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T removeLast() {
-        if(isEmpty()){
+        if (isEmpty()) {
             return null;
         }
         Node a = sentinel.prev;
-        sentinel.prev=a.prev;
-        a.prev.next =sentinel;
+        sentinel.prev = a.prev;
+        a.prev.next = sentinel;
 
         size--;
         return a.item;
@@ -118,11 +118,11 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T get(int index) {
-        Node p= sentinel.next;
-        if(size <= index || index < 0){
-            return  null;
+        Node p = sentinel.next;
+        if (size <= index || index < 0) {
+            return null;
         }
-        while(index >0 ){
+        while (index > 0) {
             p = p.next;
             index--;
         }
@@ -137,12 +137,12 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         return getRecursiveHelper(sentinel.next, index);
     }
 
-    private T getRecursiveHelper(Node obj , int index){
+    private T getRecursiveHelper(Node obj, int index) {
 
-        if(index==0){
+        if (index == 0) {
             return obj.item;
         }
 
-        return getRecursiveHelper(obj.next,index -1);
+        return getRecursiveHelper(obj.next, index - 1);
     }
 }
