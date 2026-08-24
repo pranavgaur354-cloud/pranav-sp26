@@ -5,7 +5,7 @@ public class StarTriangleN {
      */
    public static void starTriangle(int N) {
       // TODO: Fill in this function
-      for (int i = 0; i < N; i++) {
+      for (int i = 1; i <= N; i++) {
          for (int space = 0; space < N - i; space++) {
             System.out.print(" ");
 

@@ -5,7 +5,7 @@
      */
    public static void starTriangle5() {
       // TODO: Fill in this function
-      for (int i = 1; i =< 5; i++) {
+      for (int i = 1; i <= 5; i++) {
          for (int space = 0; space < 5-i; space++) {
             System.out.print(" ");
          }
